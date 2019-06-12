@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+	<!--  Sample Application -->
+	<servlet>
+		<servlet-name>RequestProperties</servlet-name>
+		<servlet-class>com.hamy.sample.RequestPropertiesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RequestProperties</servlet-name>
+		<url-pattern>/home</url-pattern>
+		<url-pattern>/accounts</url-pattern>
+		<url-pattern>/servicepoints</url-pattern>
+		<url-pattern>/meters</url-pattern>
+		<url-pattern>/registers</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DefaultAppPage</servlet-name>
+		<jsp-file>/WEB-INF/app/request_details.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DefaultAppPage</servlet-name>
+		<url-pattern>/somepage</url-pattern>
+		<url-pattern>/portal</url-pattern>
+		<url-pattern>/pageRead</url-pattern>
+		<url-pattern>/zonemap</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Application Security -->
+	<security-constraint>
+		<display-name>AppSecurity</display-name>
+		<web-resource-collection>
+			<web-resource-name>AppPages</web-resource-name>
+			<url-pattern>/home</url-pattern>
+			<url-pattern>/accounts</url-pattern>
+			<url-pattern>/servicepoints</url-pattern>
+			<url-pattern>/meters</url-pattern>
+			<url-pattern>/registers</url-pattern>
+			<url-pattern>/somepage</url-pattern>
+			<url-pattern>/portal</url-pattern>
+			<url-pattern>/pageRead</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>APPUSER</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/WEB-INF/login/login.html</form-login-page>
+			<form-error-page>/WEB-INF/login/loginerror.html</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-role>
+    	<role-name>APPUSER</role-name>
+	</security-role>
+	
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>com.hamy.sample.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
+
+	<!--  Usage Monitor Components -->
+	
+	<!-- Usage Monitor Filter -->	
+	<filter>
+		<filter-name>UsageMonitorFilter</filter-name>
+		<filter-class>com.hamy.usagemonitor.MonitorFilter</filter-class>
+		<init-param>
+			<param-name>CATEGORIZER_CLASS</param-name>
+			<param-value>com.hamy.usagemonitor.categorizer.XMLConfigfiguredURIParametersCategorizer</param-value>
+		</init-param>
+		<init-param>
+			<param-name>RECORDER_CLASSES</param-name>
+			<param-value>com.hamy.usagemonitor.recorder.InMemoryRecorder, com.hamy.usagemonitor.recorder.InMemorySessionRecorder</param-value>
+		</init-param>
+	</filter>
+
+	<!-- Usage Monitor Pages -->
+	<servlet>
+		<servlet-name>UsageMonitorPing</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderBaseServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/ping.jsp</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>UsageMonitorDashboard</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderDashboardServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/dashboard.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UsageMonitorRequestStats</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderRequestStatsServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/request_stats.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UsageMonitorIntervalStats</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderIntervalStatsServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/interval_stats.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UsageMonitorDateStats</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderDateStatsServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/date_stats.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UsageMonitorSessionList</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderBaseServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/session_list.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>UsageMonitorSessionStats</servlet-name>
+		<servlet-class>com.hamy.usagemonitor.servlets.InMemoryRecorderSessionStatsServlet</servlet-class>
+		<init-param>
+			<param-name>SUCCESS_VIEW</param-name>
+			<param-value>/WEB-INF/usagemonitor/session_stats.jsp</param-value>
+		</init-param>
+	</servlet>
+
+	<!-- Categorizer Parameters -->
+	<context-param>
+		<param-name>com.hamy.usagemonitor.categorizer.XMLConfigfiguredURIParametersCategorizer.CATEGORY_CONFIG</param-name>
+		<param-value>mdm_request_categorizer_config.xml</param-value>
+	</context-param>
+	
+	<!-- In Memory Recorder Session Listener -->
+	<listener>
+    	<listener-class>com.hamy.usagemonitor.recorder.InMemoryRecorderWebListener</listener-class>
+    </listener>
+    
+	<!-- Usage Monitor Filter and Page Mappings -->
+	<filter-mapping>
+		<filter-name>UsageMonitorFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorPing</servlet-name>
+		<url-pattern>/usagemonitor/ping</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorDashboard</servlet-name>
+		<url-pattern>/usagemonitor/</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorRequestStats</servlet-name>
+		<url-pattern>/usagemonitor/requeststats</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorIntervalStats</servlet-name>
+		<url-pattern>/usagemonitor/intervalstats</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorDateStats</servlet-name>
+		<url-pattern>/usagemonitor/datestats</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorSessionList</servlet-name>
+		<url-pattern>/usagemonitor/sessionlist</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UsageMonitorSessionStats</servlet-name>
+		<url-pattern>/usagemonitor/sessionstats</url-pattern>
+	</servlet-mapping>
+</web-app>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+	<div>
+		<h1>Login</h1>
+		<p>Enter your credentials below and click on the Login button to log into this application</p>
+		<form action="j_security_check" method="POST">
+			<div>
+			<em>Invalid Username or Password</em>
+			</div>
+			<div>
+				<label for="j_username_txt">User Name: </label>
+				<input type="text" name="j_username" id="j_username_txt">
+			</div>
+			<div>
+				<label for="j_password_txt">Password: </label>
+				<input type="password" name="j_password" id="j_password_txt">
+			</div>
+			<div>
+				<input type="submit" value="Login">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uri-parameter-categorizer xmlns="http://com.hamy.usagemonitor/xml/ns/1.0">
+	<fall-back-to-uri-as-category>true</fall-back-to-uri-as-category>
+	<category>
+		<code>SP Portal</code>
+		<uri>/portal</uri>
+		<parms>
+			<parm name="type" value="portal"/>
+			<parm name="portalCd" value="D1SP"/>
+		</parms>
+	</category>
+	<category>
+		<code>SP Portal - SP Details</code>
+		<uri>/zonemap</uri>
+		<parms>
+			<parm name="ZONE_CD" value="D1-SPDISP"/>
+			<parm name="PORTAL_CD" value="D1SP"/>
+		</parms>
+	</category>
+	<category>
+		<code>SP Portal - SP Device History</code>
+		<uri>/pageRead</uri>
+		<parms>
+			<parm name="ZONE_CD" value="D1-SPDVCHIST"/>
+			<parm name="PORTAL_CD" value="D1SP"/>
+		</parms>
+	</category>
+	<category>
+		<code>Zone - Portal {PORTAL_CD}, ZONE {ZONE_CD}</code>
+		<description>/zonemap,PORTAL_CD={PORTAL_CD},ZONE_CD={ZONE_CD}</description>
+		<uri>/zonemap</uri>
+		<parms>
+			<parm name="ZONE_CD"/>
+			<parm name="PORTAL_CD"/>
+		</parms>
+	</category>
+	<category>
+		<code>Usage Monitor - Request Statistics</code>
+		<uri>/usagemonitor/requeststats</uri>
+	</category>
+	<category>
+		<code>Usage Monitor - Session Statistics</code>
+		<uri>/usagemonitor/sessionstats</uri>
+	</category>
+	<category>
+		<code>Usage Monitor - Session List</code>
+		<uri>/usagemonitor/sessionlist</uri>
+	</category>
+</uri-parameter-categorizer>
